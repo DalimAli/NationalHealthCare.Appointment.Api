@@ -3,7 +3,6 @@ using NationalHealthCare.Appointment.Command.WorkerHost;
 using NationalHealthCare.Appointment.Infrastructure.Services;
 using NationalHealthCare.Appointment.SharedKarnel;
 using NationalHealthCare.Appointment.SharedKarnel.Abstractions;
-using SharedKernel.Abstractions;
 
 
 var services = new ServiceCollection();

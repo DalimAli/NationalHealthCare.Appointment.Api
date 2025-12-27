@@ -1,8 +1,8 @@
-using NationalHealthCare.Appointment.Command.WorkerHost.Domain.Aggregates;
-using NationalHealthCare.Appointment.Command.WorkerHost.Domain.Repositories;
-using NationalHealthCare.Appointment.Command.WorkerHost.Domain.ValueObjects;
+using NationalHealthCare.Appointment.SharedKarnel.Aggregates;
+using NationalHealthCare.Appointment.SharedKarnel.Domain.ValueObjects;
+using NationalHealthCare.Appointment.SharedKarnel.Repositories;
 
-namespace NationalHealthCare.Appointment.Command.WorkerHost.Domain.Services;
+namespace NationalHealthCare.Appointment.SharedKarnel.Domain.Services;
 
 public class AppointmentSchedulingService
 {
@@ -29,7 +29,7 @@ public class AppointmentSchedulingService
             schedule = new AppointmentSchedule(scheduleDate);
         }
 
-        var appointment = schedule.CreateAppointment(patient, doctor, timeSlot, reasonForVisit);
+        var appointment = schedule.CreateAppointment(patient, doctor, timeSlot, reasonForVisit, null);
 
         if (schedule.GetTotalAppointmentsCount() == 1)
         {

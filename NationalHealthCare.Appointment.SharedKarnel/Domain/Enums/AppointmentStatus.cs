@@ -1,4 +1,4 @@
-namespace NationalHealthCare.Appointment.Command.WorkerHost.Domain.Enums;
+namespace NationalHealthCare.Appointment.SharedKarnel.Domain.Enums;
 
 public enum AppointmentStatus
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NationalHealthCare.Appointment.Api.Models;
 using NationalHealthCare.Appointment.SharedKarnel;
-using SharedKernel.Abstractions;
+using NationalHealthCare.Appointment.SharedKarnel.Abstractions;
 
 namespace NationalHealthCare.Appointment.Api.Controllers
 {

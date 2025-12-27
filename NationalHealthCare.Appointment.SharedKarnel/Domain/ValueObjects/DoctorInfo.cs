@@ -1,4 +1,4 @@
-namespace NationalHealthCare.Appointment.Command.WorkerHost.Domain.ValueObjects;
+namespace NationalHealthCare.Appointment.SharedKarnel.Domain.ValueObjects;
 
 public sealed class DoctorInfo
 {

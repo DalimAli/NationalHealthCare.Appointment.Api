@@ -1,6 +1,6 @@
-using NationalHealthCare.Appointment.Command.WorkerHost.Domain.Aggregates;
+using NationalHealthCare.Appointment.SharedKarnel.Aggregates;
 
-namespace NationalHealthCare.Appointment.Command.WorkerHost.Domain.Repositories;
+namespace NationalHealthCare.Appointment.SharedKarnel.Repositories;
 
 public interface IAppointmentScheduleRepository
 {

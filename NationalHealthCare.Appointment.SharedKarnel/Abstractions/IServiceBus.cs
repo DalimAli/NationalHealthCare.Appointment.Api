@@ -1,6 +1,4 @@
-using NationalHealthCare.Appointment.SharedKarnel.Abstractions;
-
-namespace SharedKernel.Abstractions;
+namespace NationalHealthCare.Appointment.SharedKarnel.Abstractions;
 
 public interface IServiceBus
 {

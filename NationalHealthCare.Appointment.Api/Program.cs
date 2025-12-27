@@ -1,5 +1,5 @@
 using NationalHealthCare.Appointment.Infrastructure.Services;
-using SharedKernel.Abstractions;
+using NationalHealthCare.Appointment.SharedKarnel.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 

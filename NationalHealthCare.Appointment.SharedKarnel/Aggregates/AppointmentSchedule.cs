@@ -1,8 +1,9 @@
-using NationalHealthCare.Appointment.Command.WorkerHost.Domain.Entities;
-using NationalHealthCare.Appointment.Command.WorkerHost.Domain.ValueObjects;
-using AppointmentEntity = NationalHealthCare.Appointment.Command.WorkerHost.Domain.Entities.Appointment;
+using NationalHealthCare.Appointment.SharedKarnel.Abstractions;
+using NationalHealthCare.Appointment.SharedKarnel.Domain.ValueObjects;
+using AppointmentEntity = NationalHealthCare.Appointment.SharedKarnel.Domain.Entities.Appointment;
 
-namespace NationalHealthCare.Appointment.Command.WorkerHost.Domain.Aggregates;
+
+namespace NationalHealthCare.Appointment.SharedKarnel.Aggregates;
 
 public class AppointmentSchedule
 {
@@ -34,7 +35,8 @@ public class AppointmentSchedule
         PatientInfo patient,
         DoctorInfo doctor,
         TimeSlot timeSlot,
-        string reasonForVisit)
+        string reasonForVisit,
+        IAppointmentEvent appintmentEvent)
     {
         if (patient == null)
             throw new ArgumentNullException(nameof(patient));
@@ -52,6 +54,15 @@ public class AppointmentSchedule
         var appointment = new AppointmentEntity(patient, doctor, timeSlot, reasonForVisit);
         _appointments.Add(appointment);
         LastModifiedAt = DateTime.UtcNow;
+
+
+        appintmentEvent = new AppointmentCreatedEvent()
+        {
+            AppointmentId = appointment.Id,
+            AppointmentDate = appointment.TimeSlot.StartTime,
+            PatientName = appointment.Patient.PatientName,
+            DoctorName = appointment.Doctor.DoctorName,
+        };
 
         return appointment;
     }
@@ -131,7 +142,7 @@ public class AppointmentSchedule
         return _appointments.Count;
     }
 
-    public int GetAppointmentCountByStatus(Enums.AppointmentStatus status)
+    public int GetAppointmentCountByStatus(Domain.Enums.AppointmentStatus status)
     {
         return _appointments.Count(a => a.Status == status);
     }
@@ -147,7 +158,7 @@ public class AppointmentSchedule
         var hasConflict = _appointments
             .Where(a => a.Doctor.DoctorId == doctor.DoctorId)
             .Where(a => !excludeAppointmentId.HasValue || a.Id != excludeAppointmentId.Value)
-            .Where(a => a.Status != Enums.AppointmentStatus.Cancelled && a.Status != Enums.AppointmentStatus.NoShow)
+            .Where(a => a.Status != Domain.Enums.AppointmentStatus.Cancelled && a.Status != Domain.Enums.AppointmentStatus.NoShow)
             .Any(a => a.TimeSlot.OverlapsWith(timeSlot));
 
         if (hasConflict)
@@ -159,7 +170,7 @@ public class AppointmentSchedule
         var hasConflict = _appointments
             .Where(a => a.Patient.PatientId == patient.PatientId)
             .Where(a => !excludeAppointmentId.HasValue || a.Id != excludeAppointmentId.Value)
-            .Where(a => a.Status != Enums.AppointmentStatus.Cancelled && a.Status != Enums.AppointmentStatus.NoShow)
+            .Where(a => a.Status != Domain.Enums.AppointmentStatus.Cancelled && a.Status != Domain.Enums.AppointmentStatus.NoShow)
             .Any(a => a.TimeSlot.OverlapsWith(timeSlot));
 
         if (hasConflict)

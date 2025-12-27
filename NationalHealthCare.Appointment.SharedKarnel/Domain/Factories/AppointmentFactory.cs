@@ -1,7 +1,7 @@
-using NationalHealthCare.Appointment.Command.WorkerHost.Domain.ValueObjects;
 using NationalHealthCare.Appointment.SharedKarnel;
+using NationalHealthCare.Appointment.SharedKarnel.Domain.ValueObjects;
 
-namespace NationalHealthCare.Appointment.Command.WorkerHost.Domain.Factories;
+namespace NationalHealthCare.Appointment.SharedKarnel.Domain.Factories;
 
 public static class AppointmentFactory
 {
