@@ -1,7 +1,8 @@
-using NationalHealthCare.Appointment.Command.WorkerHost.Domain.Enums;
-using NationalHealthCare.Appointment.Command.WorkerHost.Domain.ValueObjects;
 
-namespace NationalHealthCare.Appointment.Command.WorkerHost.Domain.Entities;
+using NationalHealthCare.Appointment.SharedKarnel.Domain.Enums;
+using NationalHealthCare.Appointment.SharedKarnel.Domain.ValueObjects;
+
+namespace NationalHealthCare.Appointment.SharedKarnel.Domain.Entities;
 
 public class Appointment
 {

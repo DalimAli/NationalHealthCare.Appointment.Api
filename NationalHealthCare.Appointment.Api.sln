@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalHealthCare.Appointment.Api", "NationalHealthCare.Appointment.Api\NationalHealthCare.Appointment.Api.csproj", "{9F1069F6-C994-4084-B085-602AB90EB036}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalHealthCare.Appointment.SharedKarnel", "NationalHealthCare.Appointment.SharedKarnel\NationalHealthCare.Appointment.SharedKarnel.csproj", "{9EFA8716-24DA-4C6F-BCF2-225ACB29FF42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalHealthCare.Appointment.Command.WorkerHost", "NationalHealthCare.Appointment.Command.WorkerHost\NationalHealthCare.Appointment.Command.WorkerHost.csproj", "{9AD81F09-A432-4EC8-BB65-D309101142F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalHealthCare.Appointment.EventConsumer", "NationalHealthCare.Appointment.EventConsumer\NationalHealthCare.Appointment.EventConsumer.csproj", "{D5A48B79-0C08-47FB-812C-4F0C599283F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{9AD81F09-A432-4EC8-BB65-D309101142F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AD81F09-A432-4EC8-BB65-D309101142F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AD81F09-A432-4EC8-BB65-D309101142F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5A48B79-0C08-47FB-812C-4F0C599283F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5A48B79-0C08-47FB-812C-4F0C599283F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5A48B79-0C08-47FB-812C-4F0C599283F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5A48B79-0C08-47FB-812C-4F0C599283F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66862114-8117-4B4A-B6CD-38FC260B469B}
 	EndGlobalSection
 EndGlobal

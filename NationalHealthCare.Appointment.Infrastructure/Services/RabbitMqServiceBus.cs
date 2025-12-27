@@ -2,7 +2,6 @@
 using NationalHealthCare.Appointment.SharedKarnel.Abstractions;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using SharedKernel.Abstractions;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -66,6 +65,48 @@ public class RabbitMqServiceBus : IServiceBus
             body: body);
 
 
+
+    }
+
+
+    public async Task PublishAsync(IAppointmentEvent messege, string exchange, CancellationToken cancellationToken = default)
+    {
+        var factory = new ConnectionFactory
+        {
+            Uri = new Uri(connectionString)
+        };
+
+        await using var connection = await factory.CreateConnectionAsync();
+        await using var channel = await connection.CreateChannelAsync();
+
+        await channel.QueueDeclareAsync(
+            queue: queueName,
+            durable: true,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null);
+
+        var json = JsonSerializer.Serialize(messege, messege.GetType());
+        var body = Encoding.UTF8.GetBytes(json);
+
+
+        var properties = new BasicProperties
+        {
+            Persistent = true   // ensures message durability
+        };
+
+        await channel.ExchangeDeclareAsync(
+                exchange: exchange,
+                type: ExchangeType.Fanout,
+                durable: true,
+                autoDelete: false);
+
+        await channel.BasicPublishAsync(
+            exchange: exchange,
+            routingKey: "",
+            mandatory: true,
+            basicProperties: properties,
+            body: body);
 
     }
 
