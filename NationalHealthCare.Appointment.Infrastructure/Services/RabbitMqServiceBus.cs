@@ -36,7 +36,12 @@ public class RabbitMqServiceBus : IServiceBus
               autoDelete: false,
               arguments: null);
 
-        var payload = JsonSerializer.Serialize(command);
+        var options = new JsonSerializerOptions
+        {
+            IncludeFields = true
+        };
+
+        var payload = JsonSerializer.Serialize(command, options);
         var body = Encoding.UTF8.GetBytes(payload);
 
         var properties = new BasicProperties
