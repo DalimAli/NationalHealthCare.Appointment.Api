@@ -11,51 +11,65 @@ public class RabbitMqServiceBus : IServiceBus
 {
 
     string connectionString = "amqps://iqpehepr:dk0_-GdhN5eQA-R4w583zNmx5LtO-i_3@fuji.lmq.cloudamqp.com/iqpehepr";
-    string queueName = "iron-man-appointment-queue";
+    string QueueName = "iron-man-appointment-queue";
+    string exchangeName = "iron-man-appointment-exchange";
 
     public RabbitMqServiceBus()
     {
 
 
     }
-    public async Task PublishAsync(ICommand command, CancellationToken cancellationToken = default)
-    {
 
+    string binding = "direct-bind";
+    public async Task PublishAsync(ICommand messege,CancellationToken cancellationToken = default)
+    {
         var factory = new ConnectionFactory
         {
             Uri = new Uri(connectionString)
         };
 
-        using var connection = await factory.CreateConnectionAsync();
-        using var channel = await connection.CreateChannelAsync();
+        await using var connection = await factory.CreateConnectionAsync();
+        await using var channel = await connection.CreateChannelAsync();
 
         await channel.QueueDeclareAsync(
-              queue: queueName,
-              durable: true,
-              exclusive: false,
-              autoDelete: false,
-              arguments: null);
+            queue: QueueName,
+            durable: true,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null);
 
-        var options = new JsonSerializerOptions
-        {
-            IncludeFields = true
-        };
+        var json = JsonSerializer.Serialize(messege);
+        var body = Encoding.UTF8.GetBytes(json);
 
-        var payload = JsonSerializer.Serialize(command, options);
-        var body = Encoding.UTF8.GetBytes(payload);
 
         var properties = new BasicProperties
         {
-            Persistent = true
+            Persistent = true   // ensures message durability
         };
 
+        await channel.ExchangeDeclareAsync(
+                exchange: exchangeName,
+                type: ExchangeType.Direct,
+                durable: true,
+                autoDelete: false);
+
+        await channel.QueueBindAsync(
+                queue: QueueName,
+                exchange: exchangeName,
+                routingKey: QueueName);
+
+
         await channel.BasicPublishAsync(
-            exchange: "",
-            routingKey: queueName,
-            mandatory: false,
+            exchange: exchangeName,
+            routingKey: QueueName,
+            mandatory: true,
             basicProperties: properties,
             body: body);
+
+
+
     }
+
 
     public Task SendAsync<T>(T message, CancellationToken cancellationToken = default) where T : class
     {
