@@ -2,6 +2,8 @@
 using RabbitMQ.Client;
 using SharedKernel.Abstractions;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace NationalHealthCare.Appointment.Infrastructure.Services;
 
@@ -16,7 +18,7 @@ public class RabbitMqServiceBus : IServiceBus
 
 
     }
-    public async Task PublishAsync(ICommand message, CancellationToken cancellationToken = default) 
+    public async Task PublishAsync(ICommand command, CancellationToken cancellationToken = default)
     {
 
         var factory = new ConnectionFactory
@@ -34,7 +36,8 @@ public class RabbitMqServiceBus : IServiceBus
               autoDelete: false,
               arguments: null);
 
-        var body = Encoding.UTF8.GetBytes(message);
+        var payload = JsonSerializer.Serialize(command);
+        var body = Encoding.UTF8.GetBytes(payload);
 
         var properties = new BasicProperties
         {
