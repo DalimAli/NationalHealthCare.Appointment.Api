@@ -8,19 +8,17 @@ using System.Text.Json;
 namespace NationalHealthCare.Appointment.Command.WorkerHost;
 
 
-public class CreateAppointmentCommandHandler : ICommandHandler
+public class CreateAppointmentCommandHandler : ICommandHandler<CreateAppointmentCommand>
 {
 
-    public async Task HandleAsync(ICommand command, CancellationToken cancellationToken = default)
+    public async Task HandleAsync(CreateAppointmentCommand command, CancellationToken cancellationToken = default)
     {
-        CreateAppointmentCommand createAppointmentCommand = command as CreateAppointmentCommand;
-
         //await consumer.StartConsumingAsync(async message =>
         //{
         //    // Deserialize your command
         //    var command = JsonSerializer.Deserialize<AppointmentRequest>(message);
 
-        Console.WriteLine($"Received appointment for: {createAppointmentCommand?.PatientName} at {createAppointmentCommand?.AppointmentDate}");
+        Console.WriteLine($"Received appointment for: {command?.PatientName} at {command?.AppointmentDate}");
 
         //    // TODO: process message (e.g., save to DB)
         //}, cts.Token);

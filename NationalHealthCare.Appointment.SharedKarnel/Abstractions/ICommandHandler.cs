@@ -1,6 +1,6 @@
 ﻿namespace NationalHealthCare.Appointment.SharedKarnel.Abstractions;
 
-public interface ICommandHandler
+public interface ICommandHandler<T> where T : ICommand
 {
-    Task HandleAsync(ICommand command, CancellationToken cancellationToken = default);
+    Task HandleAsync(T command, CancellationToken cancellationToken = default);
 }

@@ -6,5 +6,5 @@ public interface IServiceBus
 {
     Task PublishAsync(ICommand message, CancellationToken cancellationToken = default);
 
-    Task StartConsumingAsync(ICommandHandler commandHandler, CancellationToken cancellationToken = default);
+    Task StartConsumingAsync<TResponse>(ICommandHandler<TResponse> commandHandler, CancellationToken cancellationToken = default) where TResponse : ICommand;
 }

@@ -20,7 +20,6 @@ public class RabbitMqServiceBus : IServiceBus
     {
     }
 
-    string binding = "direct-bind";
     public async Task PublishAsync(ICommand messege, CancellationToken cancellationToken = default)
     {
         var factory = new ConnectionFactory
@@ -70,7 +69,7 @@ public class RabbitMqServiceBus : IServiceBus
 
     }
 
-    public async Task StartConsumingAsync(ICommandHandler commandHandler, CancellationToken cancellationToken = default)
+    public async Task StartConsumingAsync<TResponse>(ICommandHandler<TResponse> commandHandler, CancellationToken cancellationToken = default) where TResponse : ICommand
     {
         var factory = new ConnectionFactory
         {
@@ -112,7 +111,7 @@ public class RabbitMqServiceBus : IServiceBus
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                var command = JsonSerializer.Deserialize<ICommand>(message);
+                var command = JsonSerializer.Deserialize<TResponse>(message);
                 await commandHandler.HandleAsync(command);
 
             }
